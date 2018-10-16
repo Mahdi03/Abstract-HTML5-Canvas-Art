@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Abstract HTML5 Canvas Art</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            text-align: 0;
+        }
+        
+        canvas {
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>-->
+</head>
+
+<body>
+    <p>This page refreshes constantly. Beware of <mark><b>Epilepsy</b></mark></p>
+    <canvas id="mainCanvas" width="800" height="800"></canvas>
+    <script>
+        //Gets The Canvas
+        var mainCanvas = document.getElementById("mainCanvas");
+        //Sets The Context to 2D, Not 3D Or WebGL-Experimental
+        var canvasWidth = mainCanvas.clientWidth;
+        var canvasHeight = mainCanvas.clientHeight;
+        var ctx = mainCanvas.getContext("2d");
+        //Global Random Number Function
+        function returnRand(min, max) {
+            var rand = Math.floor(Math.random() * max) + min;
+            return rand;
+        }
+        //Function To Draw Random Lines All Over Canvas
+        function drawRandLines() {
+            //Move "Drawer" To Random Point
+            ctx.moveTo(returnRand(0, canvasWidth), returnRand(0, canvasHeight));
+            //Make Line To Another Random Point
+            ctx.lineTo(returnRand(0, canvasWidth), returnRand(0, canvasHeight));
+            //Change The Stroke Color To A Random RGB Color
+            ctx.strokeStyle = "rgb(" + String(returnRand(0, 255)) + ", " + String(returnRand(0, 255)) + ", " + String(returnRand(0, 255)) + ")";
+            //Change The Line Width To 2px
+            ctx.lineWidth = "2";
+            //Actually Draw The Line
+            ctx.stroke();
+        }
+        //Function To Draw Other Easy Shapes Like Rectangles and Circles
+        function drawRandShapes() {
+            //Call It Twice (Draw Everything Twice)
+            for (var j = 0; j < 2; j++) {
+                //Set The Stroke Width To 3px
+                ctx.lineWidth = "3";
+                //Set The Stroke Color To Random RGB Color
+                ctx.strokeStyle = "rgb(" + String(returnRand(0, 255)) + ", " + String(returnRand(0, 255)) + ", " + String(returnRand(0, 255)) + ")";
+                /*Stroke In A Rectangle With Random:
+                 * Length
+                 * Width
+                 * Start Position (x, y)
+                 */
+                ctx.strokeRect(returnRand(0, canvasWidth), returnRand(0, canvasHeight), returnRand(0, canvasWidth), returnRand(0, canvasHeight));
+                /*Stroke in A Circle With Random:
+                 * Start Position (x, y)
+                 * Radius
+                 * Counter-Clockwise Or Not (True or False)
+                 * Start Angle
+                 * End Angle
+                 */
+                var circleRad;
+                //If 
+                if (canvasWidth > canvasHeight) {
+                    circleRad = canvasWidth;
+                } else {
+                    circleRad = canvasHeight;
+                }
+                ctx.arc(returnRand(0, canvasWidth), returnRand(0, canvasHeight), returnRand(0, circleRad), returnRand(0, 2 * Math.PI), returnRand(0, 2 * Math.PI), Math.random() < 0.5);
+            }
+        }
+        //Call Each Function 25 Times (Draw 25 Of Each)
+        for (var i = 0; i < 25; i++) {
+            drawRandLines();
+            drawRandShapes();
+        }
+        //Reload The Webpage To Change The Drawing Constantly But After 50 Milliseconds To Give Some Browsers Some Time To Load The Page
+        setTimeout(function() {
+            window.location.reload(true);
+        }, 50);
+    </script>
+</body>
+
+</html>
